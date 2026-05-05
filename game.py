@@ -8,8 +8,7 @@ import json
 # ----------------------------
 # 🟢 КОНСТАНТЫ
 # ----------------------------
-WIDTH, HEIGHT = 1200, 800
-
+WIDTH, HEIGHT = 1400, 900
 # 🟢 ИНИЦИАЛИЗАЦИЯ ЛОГА
 log = []
 
@@ -133,15 +132,15 @@ start, goal, impassable_obstacles = load_or_create_positions(student_name)
 screen = turtle.Screen()
 screen.setup(WIDTH, HEIGHT)
 screen.title(f"Red Riding Hood Mission - {student_name}")
-screen.bgcolor("white")
+screen.bgcolor("lightblue")
 screen.tracer(0)
 
 # ----------------------------
 # 🟢 ГЕРОЙ
 # ----------------------------
 hero = turtle.Turtle()
-hero.shape("circle")
-hero.color("red")
+hero.shape("triangle")
+hero.color("blue")
 hero.penup()
 hero.goto(start)
 hero.shapesize(2, 2)
@@ -156,6 +155,7 @@ dynamic_obstacles = []
 # ----------------------------
 steps = 0
 penalties = 0
+lives = 3
 
 # ----------------------------
 # 🟢 СКОРОСТЬ
@@ -231,7 +231,7 @@ def draw_all():
             drawer.pendown()
             drawer.fillcolor("darkred")
             drawer.begin_fill()
-            for _ in range(2):
+            for _ in range(6):
                 drawer.forward(w)
                 drawer.left(90)
                 drawer.forward(h)
@@ -275,6 +275,7 @@ def draw_all():
                        align="center", font=("Arial", 16, "bold"))
     
     screen.update()
+    pen.write(f"Lives: {lives}", align="left")
 
 def rect_collision(hero_x, hero_y, rect_x, rect_y, rect_w, rect_h, hero_radius=15):
     """Проверяет столкновение круга с прямоугольником"""
