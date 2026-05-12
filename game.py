@@ -9,6 +9,7 @@ import json
 # 🟢 КОНСТАНТЫ
 # ----------------------------
 WIDTH, HEIGHT = 1400, 900
+
 # 🟢 ИНИЦИАЛИЗАЦИЯ ЛОГА
 log = []
 
@@ -132,7 +133,7 @@ start, goal, impassable_obstacles = load_or_create_positions(student_name)
 screen = turtle.Screen()
 screen.setup(WIDTH, HEIGHT)
 screen.title(f"Red Riding Hood Mission - {student_name}")
-screen.bgcolor("lightblue")
+screen.bgcolor("light blue")
 screen.tracer(0)
 
 # ----------------------------
@@ -143,7 +144,7 @@ hero.shape("triangle")
 hero.color("blue")
 hero.penup()
 hero.goto(start)
-hero.shapesize(2, 2)
+hero.shapesize(1, 5)
 
 # ----------------------------
 # 🟢 ПРЕПЯТСТВИЯ
@@ -155,13 +156,12 @@ dynamic_obstacles = []
 # ----------------------------
 steps = 0
 penalties = 0
-lives = 3
 
 # ----------------------------
 # 🟢 СКОРОСТЬ
 # ----------------------------
-vx = 3
-vy = 3
+vx = 5
+vy = 5
 
 # ----------------------------
 # 🟢 РЕЖИМ
@@ -231,7 +231,7 @@ def draw_all():
             drawer.pendown()
             drawer.fillcolor("darkred")
             drawer.begin_fill()
-            for _ in range(6):
+            for _ in range(2):
                 drawer.forward(w)
                 drawer.left(90)
                 drawer.forward(h)
@@ -275,7 +275,6 @@ def draw_all():
                        align="center", font=("Arial", 16, "bold"))
     
     screen.update()
-    pen.write(f"Lives: {lives}", align="left")
 
 def rect_collision(hero_x, hero_y, rect_x, rect_y, rect_w, rect_h, hero_radius=15):
     """Проверяет столкновение круга с прямоугольником"""
@@ -291,8 +290,8 @@ def check_collision():
     global penalties
     for ox, oy, (w, h) in impassable_obstacles:
         if rect_collision(hero.xcor(), hero.ycor(), ox, oy, w, h, hero_radius=15):
-            penalties += 10
-            print(f"⚠️ ШТРАФ! (-10 баллов)")
+            penalties += 20
+            print(f"⚠️ ШТРАФ! (-20 баллов)")
             hero.goto(hero.xcor() - vx*3, hero.ycor() - vy*3)
             return "penalty"
     
@@ -422,6 +421,7 @@ while True:
         print("🎯 Reached B! RETURN TO A!")
         print(f"🟢 Теперь будут появляться препятствия!")
         going_forward = False
+        hero.color("yellow")
         
         log.append({
             "event": "reached_goal_B",
